@@ -45,31 +45,31 @@ st.markdown("""
         background-color: #f7f3e9;
     }
     .title {
-        font-size: 36px;
+        font-size: 60px;
         font-weight: bold;
         color: #d9534f;
         text-align: center;
     }
     .subheading {
-        font-size: 18px;
+        font-size: 28px;
         font-weight: bold;
         color: #5a5a5a;
         text-align: center;
     }
     .stTextInput > div > div > input {
-        font-size: 16px;
+        font-size: 26px;
         padding: 10px;
     }
     .stButton>button {
         background-color: #d9534f;
         color: white;
-        font-size: 16px;
+        font-size: 26px;
         border-radius: 5px;
         padding: 8px 15px;
     }
     .result {
         text-align: center;
-        font-size: 24px;
+        font-size: 44px;
         font-weight: bold;
         margin-top: 20px;
     }
