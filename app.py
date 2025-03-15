@@ -57,7 +57,7 @@ st.markdown("""
         text-align: center;
     }
     .stTextInput > div > div > input {
-        font-size: 26px;
+        font-size: 16px;
         padding: 10px;
     }
     .stButton>button {
