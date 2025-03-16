@@ -81,7 +81,7 @@ st.markdown("""
 # Home Page
 if page == "Home":
     st.markdown('<h1 class="title">📩 SMS Spam Detection Model</h1>', unsafe_allow_html=True)
-    st.markdown('<h3 class="subheading">Made by Pratiksha Waghmode</h3>', unsafe_allow_html=True)
+    st.markdown('<h3 class="subheading"; filter: blur(2px);>Made by Pratiksha Waghmode</h3>', unsafe_allow_html=True)
 
     # Input field
     input_sms = st.text_input("Enter the SMS below:", placeholder="Type your message here...")
@@ -99,15 +99,15 @@ if page == "Home":
 
             # Display results
             if result == 1:
-                st.markdown('<p class="result" style="color: red;">🚨 Spam</p>', unsafe_allow_html=True)
+                st.markdown('<h1 class="result" style="color: red;">🚨 Spam</h1>', unsafe_allow_html=True)
             else:
-                st.markdown('<p class="result" style="color: green;">✅ Not Spam</p>', unsafe_allow_html=True)
+                st.markdown('<h1 class="result" style="color: green;">✅ Not Spam</h1>', unsafe_allow_html=True)
         else:
             st.warning("Please enter an SMS to analyze.")
 
 # History Page
 elif page == "History":
-    st.markdown('<p class="title">📜 Prediction History</p>', unsafe_allow_html=True)
+    st.markdown('<h1 class="title">📜 Prediction History</h1>', unsafe_allow_html=True)
 
     if st.session_state.history:
         df_history = pd.DataFrame(st.session_state.history)
@@ -117,7 +117,7 @@ elif page == "History":
 
 # About Us Page
 elif page == "About Us":
-    st.markdown('<p class="title">💡 About This Project</p>', unsafe_allow_html=True)
+    st.markdown('<h1 class="title">💡 About This Project</h1>', unsafe_allow_html=True)
     st.write("""
     **Project:** SMS Spam Detection Model  
     **Developer:** Pratiksha Waghmode  
