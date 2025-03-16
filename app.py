@@ -38,7 +38,7 @@ st.set_page_config(page_title="SMS Spam Detection", layout="wide")
 
 # Sidebar Navigation
 st.sidebar.title("📌 Navigation")
-page = st.sidebar.radio("Go to:", ["Home", "History", "About Us", "Statistics"])
+page = st.sidebar.radio("Go to:", ["Home", "History", "About Us"])
 
 # Custom CSS for styling
 st.markdown("""
@@ -124,22 +124,3 @@ elif page == "About Us":
     **Technology Used:** Python, Streamlit, NLP, Machine Learning  
     **Purpose:** This project helps in detecting spam messages using NLP techniques and Machine Learning models.  
     """)
-
-# Statistics Page
-elif page == "Statistics":
-    st.markdown('<p class="title">📊 Spam vs. Ham Analysis</p>', unsafe_allow_html=True)
-
-    # Sample Data (Replace with real stats)
-    spam_count = 35
-    ham_count = 65
-    df_stats = pd.DataFrame({"Type": ["Spam", "Not Spam"], "Count": [spam_count, ham_count]})
-
-    # Pie Chart
-    fig = px.pie(df_stats, names="Type", values="Count", title="Spam vs. Not Spam Messages", color="Type",
-                 color_discrete_map={"Spam": "red", "Not Spam": "green"})
-    st.plotly_chart(fig)
-
-    # Bar Chart
-    fig_bar = px.bar(df_stats, x="Type", y="Count", title="Message Type Distribution", color="Type",
-                     color_discrete_map={"Spam": "red", "Not Spam": "green"})
-    st.plotly_chart(fig_bar)
