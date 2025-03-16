@@ -80,8 +80,8 @@ st.markdown("""
 
 # Home Page
 if page == "Home":
-    st.markdown('<p class="title">📩 SMS Spam Detection Model</p>', unsafe_allow_html=True)
-    st.markdown('<p class="subheading">Made by Pratiksha Waghmode</p>', unsafe_allow_html=True)
+    st.markdown('<h1 class="title">📩 SMS Spam Detection Model</h1>', unsafe_allow_html=True)
+    st.markdown('<h3 class="subheading">Made by Pratiksha Waghmode</h3>', unsafe_allow_html=True)
 
     # Input field
     input_sms = st.text_input("Enter the SMS below:", placeholder="Type your message here...")
