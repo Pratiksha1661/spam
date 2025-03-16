@@ -1,124 +1,77 @@
-import streamlit as st
-import pandas as pd
 import nltk
+import streamlit as st
 import pickle
 import string
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
-# Download necessary NLTK resources
+# Download necessary resources
 nltk.download('punkt')
 nltk.download('stopwords')
 
-# Initialize Porter Stemmer
 ps = PorterStemmer()
 
-# Function to preprocess text
 def transform_text(text):
     text = text.lower()
     text = nltk.word_tokenize(text)
 
-    y = [i for i in text if i.isalnum()]
-    y = [ps.stem(i) for i in y if i not in stopwords.words('english') and i not in string.punctuation]
+    y = []
+    for i in text:
+        if i.isalnum():
+            y.append(i)
+
+    text = y[:]
+    y.clear()
+
+    for i in text:
+        if i not in stopwords.words('english') and i not in string.punctuation:
+            y.append(i)
+
+    text = y[:]
+    y.clear()
+
+    for i in text:
+        y.append(ps.stem(i))
 
     return " ".join(y)
 
-# Load trained tokenizer and model
+# Load vectorizer and model
 tk = pickle.load(open("transform.pkl", 'rb'))
 model = pickle.load(open("model.pkl", 'rb'))
 
-# Initialize history storage
-if "history" not in st.session_state:
-    st.session_state.history = []
-
-# Streamlit UI
-st.set_page_config(page_title="SMS Spam Detection", layout="wide")
-
 # Sidebar Navigation
-st.sidebar.title("📌 Navigation")
-page = st.sidebar.radio("Go to:", ["Home", "History", "About Us"])
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Home", "About Us", "History"])
 
-# Custom CSS for styling
-st.markdown("""
-    <style>
-    .main {
-        background-color: #f7f3e9;
-    }
-    .title {
-        font-size: 36px;
-        font-weight: bold;
-        color: #d9534f;
-        text-align: center;
-    }
-    .subheading {
-        font-size: 18px;
-        font-weight: bold;
-        color: #5a5a5a;
-        text-align: center;
-    }
-    .stTextInput > div > div > input {
-        font-size: 16px;
-        padding: 10px;
-    }
-    .stButton>button {
-        background-color: #d9534f;
-        color: white;
-        font-size: 16px;
-        border-radius: 5px;
-        padding: 8px 15px;
-    }
-    .result {
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-        margin-top: 20px;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Home Page
 if page == "Home":
-    st.markdown('<p class="title">📩 SMS Spam Detection Model</p>', unsafe_allow_html=True)
-    st.markdown('<p class="subheading">Made by Pratiksha Waghmode</p>', unsafe_allow_html=True)
+    st.title("SMS Spam Detection Model")
+    st.write("*Made by Pratiksha Waghmode*")
 
-    # Input field
-    input_sms = st.text_input("Enter the SMS below:", placeholder="Type your message here...")
+    input_sms = st.text_input("Enter the SMS")
 
-    # Predict Button
-    if st.button('Predict 🚀'):
-        if input_sms.strip():  # Check if input is not empty
-            transformed_sms = transform_text(input_sms)
-            vector_input = tk.transform([transformed_sms])
-            result = model.predict(vector_input)[0]
-
-            # Store history
-            prediction_text = "Spam 🚨" if result == 1 else "Not Spam ✅"
-            st.session_state.history.append({"Message": input_sms, "Prediction": prediction_text})
-
-            # Display results
-            if result == 1:
-                st.markdown('<p class="result" style="color: red;">🚨 Spam</p>', unsafe_allow_html=True)
-            else:
-                st.markdown('<p class="result" style="color: green;">✅ Not Spam</p>', unsafe_allow_html=True)
+    if st.button('Predict'):
+        # 1. preprocess
+        transformed_sms = transform_text(input_sms)
+        # 2. vectorize
+        vector_input = tk.transform([transformed_sms])
+        # 3. predict
+        result = model.predict(vector_input)[0]
+        # 4. Display
+        if result == 1:
+            st.header("Spam")
         else:
-            st.warning("Please enter an SMS to analyze.")
+            st.header("Not Spam")
 
-# History Page
-elif page == "History":
-    st.markdown('<p class="title">📜 Prediction History</p>', unsafe_allow_html=True)
-
-    if st.session_state.history:
-        df_history = pd.DataFrame(st.session_state.history)
-        st.dataframe(df_history)  # Display history as a table
-    else:
-        st.info("No history available yet. Start predicting!")
-
-# About Us Page
 elif page == "About Us":
-    st.markdown('<p class="title">💡 About This Project</p>', unsafe_allow_html=True)
+    st.title("About Us")
     st.write("""
-    **Project:** SMS Spam Detection Model  
-    **Developer:** Pratiksha Waghmode  
-    **Technology Used:** Python, Streamlit, NLP, Machine Learning  
-    **Purpose:** This project helps in detecting spam messages using NLP techniques and Machine Learning models.  
+    This is an **SMS Spam Detection Model** that helps users determine whether a message is spam or not.  
+    It uses **Natural Language Processing (NLP)** and **Machine Learning** to analyze and classify messages.
+    """)
+
+elif page == "History":
+    st.title("History")
+    st.write("""
+    Spam detection has evolved from simple rule-based filtering to advanced **Machine Learning algorithms**.  
+    This model leverages **TF-IDF Vectorization** and a trained classifier for accurate spam detection.
     """)
