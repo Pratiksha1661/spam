@@ -1,27 +1,7 @@
 import streamlit as st
-import base64
-
-# Function to set background image
-def set_bg(image_file):
-    with open(image_file, "rb") as img:
-        encoded_string = base64.b64encode(img.read()).decode()
-    bg_image = f"""
-    <style>
-    .stApp {{
-        background-image: url("data:image/png;base64,{encoded_string}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-    }}
-    </style>
-    """
-    st.markdown(bg_image, unsafe_allow_html=True)
 
 # Set page title and layout
 st.set_page_config(page_title="SMS Spam Detection", layout="wide")
-
-# Apply background image
-set_bg("image.jpeg")
 
 # Sidebar Navigation
 st.sidebar.markdown("### 📌 Navigation", unsafe_allow_html=True)
@@ -29,11 +9,11 @@ page = st.sidebar.radio("Go to:", ["Home", "History", "About Us"])
 
 # Home Page
 if page == "Home":
-    st.markdown("<h2 style='text-align: center; color: red;'>📩 SMS Spam Detection Model</h2>", unsafe_allow_html=True)
-    st.markdown("<h4 style='text-align: center; color: gray;'>Made by Pratiksha Waghmode</h4>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; font-size:36px; color: red;'>📩 SMS Spam Detection Model</h2>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: center; font-size:20px; color: gray;'>Made by Pratiksha Waghmode</h4>", unsafe_allow_html=True)
 
     st.write("### Enter the SMS below:")
-    message = st.text_area("Type your message here...")
+    message = st.text_area("Type your message here...", height=100)
 
     if st.button("🚀 Predict", help="Click to classify as Spam or Ham"):
         # Placeholder for model prediction (replace with actual model logic)
