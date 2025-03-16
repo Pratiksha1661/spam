@@ -1,9 +1,11 @@
-import streamlit as st
-import pandas as pd
 import nltk
-import pickle
+nltk.download('punkt')
+nltk.download('punkt_tab')
+nltk.download('stopwords')
+
+import streamlit as st
+import pickle 
 import string
-import plotly.express as px
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
