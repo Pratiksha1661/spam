@@ -21,7 +21,7 @@ def set_bg(image_file):
 st.set_page_config(page_title="SMS Spam Detection", layout="wide")
 
 # Apply background image
-set_bg("image.png")
+set_bg("image.jpeg")
 
 # Sidebar Navigation
 st.sidebar.markdown("### 📌 Navigation", unsafe_allow_html=True)
